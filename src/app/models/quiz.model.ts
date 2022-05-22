@@ -1,0 +1,20 @@
+export interface QuizModel {
+  id: number;
+  questions: Question[]; // questions.length == 8
+}
+
+export interface Question {
+  id: number;
+  text: string; // e.g. “What is the capital of France?”
+  answers: Answer[];  // answers.length=4, only one answer will be
+}
+
+export interface Answer {
+  text: string; // e.g. “Paris”
+  index: number; // a zero based index of answers to a question. The answer with index 0 is // correct.
+}
+
+interface Answering {
+  questionId: number;
+  answerIndex: number; // answerIndex is in [0,1,2,3]
+}

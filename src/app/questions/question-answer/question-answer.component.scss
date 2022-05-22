@@ -1,0 +1,22 @@
+section {
+  border: 1px solid #4e349d;
+  border-radius: 4px;
+  padding: 24px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+
+  .question {
+    margin-bottom: 20px;
+  }
+
+  .answer-wrapper {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+
+    input, label {
+      cursor: pointer;
+    }
+  }
+}

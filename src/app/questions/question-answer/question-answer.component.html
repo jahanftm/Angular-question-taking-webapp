@@ -1,0 +1,10 @@
+<section>
+  <div class="question">What is the capital of France?</div>
+
+  <ng-container *ngFor="let item of a, index as i">
+    <div class="answer-wrapper">
+      <input type="radio" [id]='i' name="answer" value="1">
+      <label [for]="i">{{item.text}}</label>
+    </div>
+  </ng-container>
+</section>

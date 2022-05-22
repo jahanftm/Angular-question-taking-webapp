@@ -1,10 +1,11 @@
 <section>
-  <div class="question">What is the capital of France?</div>
-
-  <ng-container *ngFor="let item of a, index as i">
-    <div class="answer-wrapper">
-      <input type="radio" [id]='i' name="answer" value="1">
-      <label [for]="i">{{item.text}}</label>
-    </div>
+  <h1>Questions</h1>
+  <ng-container *ngFor="let item of quiz.questions;index as index">
+    <app-question-box
+      *ngIf="step === index"
+      [question]="item"
+      [currentStep]="step"
+      (changeStep)="changeStep($event)"
+    ></app-question-box>
   </ng-container>
 </section>

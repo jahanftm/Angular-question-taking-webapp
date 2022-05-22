@@ -1,0 +1,16 @@
+<section>
+  <div class="question">{{question?.text}}</div>
+
+  <ng-container *ngFor="let item of question?.answers, index as i">
+    <div class="answer-wrapper">
+      <input type="radio" [id]='i' [name]="'answer' + i" value="{{item.index}}" (change)="onItemChange($event.target)">
+      <label [for]="i">{{item.text}}</label>
+    </div>
+  </ng-container>
+</section>
+<div class="success" *ngIf="status === 1">
+  your answer is correct
+</div>
+<div class="error" *ngIf="status === 0">
+  your answer is wrong
+</div>

@@ -9,7 +9,7 @@ import { QuizModel } from '../../models/quiz.model';
 })
 export class QuestionHomeComponent implements OnInit {
 
-  step: 'start' | 'progress' | 'complete' | string = 'complete';
+  step: 'start' | 'progress' | 'complete' | string = 'start';
 
   quiz: QuizModel = {
     id: 1001,

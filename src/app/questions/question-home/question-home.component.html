@@ -1,3 +1,3 @@
-<div class="btn" *ngIf="step === 'start'" (click)="changeStep('progress')">start quiz</div>
+<app-ui-button *ngIf="step === 'start'" (click)="changeStep('progress')">start quiz</app-ui-button>
 <app-question-answer *ngIf="step === 'progress'" [quiz]="quiz" (changes)="changeStep($event)"></app-question-answer>
-<app-question-complete [toTalScore]="quiz.questions.length" *ngIf="step ==='complete'"></app-question-complete>
+<app-question-complete *ngIf="step ==='complete'" [toTalScore]="quiz.questions.length" (changeStep)="changeStep($event)" ></app-question-complete>

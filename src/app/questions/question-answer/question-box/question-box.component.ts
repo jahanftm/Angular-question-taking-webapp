@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Question } from '../../../models/quiz.model';
+import { QuestionBusService } from '../../question-bus.service';
+import { QuestionService } from '../../../core/api/question.service';
 
 @Component({
   selector: 'app-question-box',
@@ -17,28 +19,65 @@ export class QuestionBoxComponent implements OnInit {
   @Input()
   question?: Question;
 
-  // 1 -> success, 2-> error
-  status?: number;
+  questionStatus?: boolean;
 
-  constructor() {
+  isAnswered: boolean = false;
 
+  constructor(private questionBusService: QuestionBusService,
+              private questionService: QuestionService) {
   }
 
   ngOnInit(): void {
-    console.log('YY', this.currentStep);
   }
 
-  onItemChange(evt: any): void {
+  onItemSelected(evt: any): void {
+    this.questionStatus = true;
+    this.questionBusService.isAnswered.next({questionId: this.question?.id, answer: true});
+
+    const data = {questionId: this.question?.id, answerIndex: evt};
+    let param = '';
+
+    if (this.question?.id !== 0 && this.questionBusService.count % 4 === 0) {
+      console.log(this.question?.id, this.questionBusService.count, this.questionBusService.count % 4);
+      param = 'br=true';
+    }
+    this.questionService.sendAnswer(data, param).subscribe(res => {
+
+      this.questionBusService.sentAnswer.next('success');
+      this.questionBusService.count++;
+
+    }, error => {
+      console.log(this.currentStep);
+      this.questionBusService.sentAnswer.next('error');
+      this.changeStep.emit(this.currentStep);
+    });
+
     if (Number(evt.value) === 0) {
-      this.status = 1;
+      // console.log(true);
+      this.selectedAnswer(true);
       setTimeout(() => {
+
         this.changeStep.emit(this.currentStep + 1);
-      }, 1000);
+      }, 500);
       return;
     }
-    this.status = 0;
+    // console.log(false);
+
+    this.selectedAnswer(false);
     setTimeout(() => {
       this.changeStep.emit(this.currentStep + 1);
-    }, 1000);
+    }, 500);
   }
+
+  selectedAnswer(value: boolean): void {
+    const index = this.questionBusService.answerList.findIndex((x: any) => x.questionId === this.question?.id);
+
+    if (index !== -1) {
+      this.questionBusService.answerList.splice(index, 1);
+      this.questionBusService.answerList.push({questionId: this.question?.id, answer: value});
+      return;
+    }
+    this.questionBusService.answerList.push({questionId: this.question?.id, answer: value});
+  }
+
 }

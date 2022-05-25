@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { QuizModel } from '../../models/quiz.model';
+import { QuestionBusService } from '../question-bus.service';
 
 @Component({
   selector: 'app-question-answer',
@@ -16,18 +17,23 @@ export class QuestionAnswerComponent implements OnInit {
   @Output()
   changes: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() {
+  constructor(public questionBusService: QuestionBusService) {
   }
 
   ngOnInit(): void {
+
+    // this.questionBusService.isAnswered.asObservable().subscribe(res => {
+    //   const previousQuestion = this.questionBusService.sentAnswer.getValue();
+    //   if (res.questionId === this.step && res.answer && previousQuestion === 'error') {
+    //     this.step--;
+    //   }
+    // });
   }
 
   changeStep(step: number): void {
     this.step = step;
 
     if (this.step === this.quiz.questions.length) {
-      console.log('here');
-
       this.changes.emit('complete');
     }
   }

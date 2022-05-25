@@ -5,6 +5,7 @@ import { QuestionHomeComponent } from './question-home/question-home.component';
 import { QuestionAnswerComponent } from './question-answer/question-answer.component';
 import { QuestionBoxComponent } from './question-answer/question-box/question-box.component';
 import { QuestionCompleteComponent } from './question-complete/question-complete.component';
+import { UiButtonComponent } from '../ui/ui-button/ui-button.component';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { QuestionCompleteComponent } from './question-complete/question-complete
     QuestionHomeComponent,
     QuestionAnswerComponent,
     QuestionBoxComponent,
-    QuestionCompleteComponent
+    QuestionCompleteComponent,
+    UiButtonComponent,
   ],
   imports: [
     CommonModule,

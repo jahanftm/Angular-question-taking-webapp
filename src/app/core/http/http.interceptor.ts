@@ -21,6 +21,14 @@ export class AppHttpInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent |
     HttpHeaderResponse | HttpProgressEvent | HttpResponse<any>> {
     // All HTTP requests are going to go through this method
+
   }
 
+  private addRequiredHeaders(req: HttpRequest<any>): HttpRequest<any>{
+    const headers = req.headers;
+
+    return req.clone({
+      headers,
+    });
+  }
 }

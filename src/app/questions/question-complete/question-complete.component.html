@@ -1,8 +1,9 @@
 <section>
   <h1>your result:</h1>
   <div class="score">
-    <div>5</div>
+    <div>{{userScore}}</div>
     <div>out of</div>
     <div>{{toTalScore}}</div>
   </div>
+  <app-ui-button (click)="onClicked()">another quiz</app-ui-button>
 </section>

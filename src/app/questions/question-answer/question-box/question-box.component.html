@@ -1,16 +1,16 @@
 <section>
-  <div class="question">{{question?.text}}</div>
+  <div class="question">{{question?.id + 1 + '- ' +question?.text}}</div>
 
   <ng-container *ngFor="let item of question?.answers, index as i">
     <div class="answer-wrapper">
-      <input type="radio" [id]='i' [name]="'answer' + i" value="{{item.index}}" (change)="onItemChange($event.target)">
+      <input type="radio" [id]='i' [name]="'answer' + currentStep" value="{{item.index}}" (change)="onItemSelected($event.target)">
       <label [for]="i">{{item.text}}</label>
     </div>
   </ng-container>
+
+  <i></i>
 </section>
-<div class="success" *ngIf="status === 1">
-  your answer is correct
+<div class="success" *ngIf="questionStatus">
+  answered
 </div>
-<div class="error" *ngIf="status === 0">
-  your answer is wrong
-</div>
+

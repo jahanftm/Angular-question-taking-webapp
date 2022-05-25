@@ -15,6 +15,7 @@ section {
     margin-bottom: 10px;
     display: flex;
     align-items: center;
+    position: relative;
 
     input, label {
       cursor: pointer;
@@ -22,12 +23,9 @@ section {
   }
 }
 
-.success, .error {
+.success {
   padding: 8px 0;
   font-size: 14px;
-  color: green;
+  color: #0a2da8;
 }
 
-.error {
-  color: red;
-}

@@ -2,23 +2,23 @@ import { Injectable } from '@angular/core';
 import { BaseApiClient } from './base-api-client';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Answer, QuizModel } from '../../models/quiz.model';
+import { Answer, Answering, QuizModel } from '../../models/quiz.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class QuestionServiceService extends BaseApiClient {
+export class QuestionService extends BaseApiClient {
 
   constructor(private httpClient: HttpClient) {
     super(httpClient);
   }
 
   getQuiz(): Observable<QuizModel> {
-    return this.get('quiz');
+    return this.get('http://localhost:9000/quiz');
   }
 
-  sendAnswer(data: Answer): Observable<any> {
-    return this.post('answer', data);
+  sendAnswer(data: Answering, param: string): Observable<any> {
+    return this.post(`http://localhost:9000/answer?${param}`, data);
   }
 
 }

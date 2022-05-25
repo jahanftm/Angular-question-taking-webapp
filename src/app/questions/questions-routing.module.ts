@@ -4,7 +4,7 @@ import { QuestionHomeComponent } from './question-home/question-home.component';
 
 const routes: Routes = [
   {
-    path: 'quiz',
+    path: '',
     component: QuestionHomeComponent
   }
 ];

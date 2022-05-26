@@ -30,7 +30,7 @@ export class QuestionHomeComponent implements OnInit {
     }
 
     this.questionService.getQuiz().subscribe(res => {
-      this.step = 'progress';
+      this.step = evt;
       this.quiz = res;
     });
   }

@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const quiz = require('./quiz');
-const answers = require("./answers");
+const answers = require('./answers');
 
 const app = express();
 
@@ -9,18 +9,17 @@ app.use(express.urlencoded());
 app.use(express.json());
 app.use(cors());
 
+app.get('/quiz', ( req, res ) => {
+  setTimeout(() => {
+    res.status(201).send(
+      quiz[ Math.floor(Math.random() * quiz.length) ]
+    );
+  }, 600);
+});
 
-app.get("/quiz",(req,res)=>{
-    setTimeout(()=>{
-        res.status(201).send(
-          quiz[Math.floor(Math.random()*quiz.length)]
-        )
-    },600)
-})
+app.post('/answer', ( req, res ) => {
 
-app.post('/answer', (req, res) => {
-
-  const { questionId, answerIndex } = req.body;
+  const {questionId, answerIndex} = req.body;
   const badRequest = req.query.br;
 
   setTimeout(() => {
@@ -29,10 +28,11 @@ app.post('/answer', (req, res) => {
     } else {
       const userAnswer = answers.find(answer => answer.questionId === questionId && answer.answerIndex === answerIndex);
       const isCorrect = !!userAnswer;
-        res.status(201).send({
-          isCorrect
-        });
-      }
+      res.status(201).send({
+        isCorrect,
+        message: 'SUCCESS'
+      });
+    }
   }, 1000);
 });
 

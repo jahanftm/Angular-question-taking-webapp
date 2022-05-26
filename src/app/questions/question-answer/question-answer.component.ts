@@ -12,7 +12,7 @@ export class QuestionAnswerComponent implements OnInit {
   @Input()
   quiz: QuizModel | any = {};
 
-  step = 0;
+  step?: number = 0;
 
   @Output()
   changes: EventEmitter<string> = new EventEmitter<string>();
@@ -21,20 +21,29 @@ export class QuestionAnswerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.questionBusService.isAnswered.asObservable().subscribe(res => {
+      const previousQuestion = this.questionBusService.responseState.getValue();
+      if (previousQuestion.state === 'error') {
+        this.step = previousQuestion.questionId;
+      }
 
-    // this.questionBusService.isAnswered.asObservable().subscribe(res => {
-    //   const previousQuestion = this.questionBusService.sentAnswer.getValue();
-    //   if (res.questionId === this.step && res.answer && previousQuestion === 'error') {
-    //     this.step--;
-    //   }
-    // });
+    });
+
+    this.questionBusService.responseState.asObservable().subscribe(res => {
+      if (res.state === 'success') {
+        this.questionBusService.responseList.push(res);
+      }
+
+      // @ts-ignore
+      const response = Array.from(new Set(this.questionBusService.responseList.map(JSON.stringify))).map(JSON.parse);
+      console.log(response);
+      if ((this.step === this.quiz.questions.length) && (response.length === this.quiz.questions.length)) {
+        this.changes.emit('complete');
+      }
+    });
   }
 
   changeStep(step: number): void {
     this.step = step;
-
-    if (this.step === this.quiz.questions.length) {
-      this.changes.emit('complete');
-    }
   }
 }

@@ -9,7 +9,6 @@ import {
   HttpSentEvent,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AppHttpInterceptor implements HttpInterceptor {
@@ -22,13 +21,5 @@ export class AppHttpInterceptor implements HttpInterceptor {
     HttpHeaderResponse | HttpProgressEvent | HttpResponse<any>> {
     // All HTTP requests are going to go through this method
 
-  }
-
-  private addRequiredHeaders(req: HttpRequest<any>): HttpRequest<any>{
-    const headers = req.headers;
-
-    return req.clone({
-      headers,
-    });
   }
 }

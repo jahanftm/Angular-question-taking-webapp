@@ -2,12 +2,10 @@
   <h1>Questions</h1>
   <ng-container *ngFor="let item of quiz.questions;index as index">
     <app-question-box
-      *ngIf="step === index"
+      *ngIf="index === step"
       [question]="item"
       [currentStep]="step"
       (changeStep)="changeStep($event)"
     ></app-question-box>
   </ng-container>
 </section>
-
-{{questionBusService.answerList | json}}

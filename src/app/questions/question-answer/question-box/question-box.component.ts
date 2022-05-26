@@ -34,23 +34,7 @@ export class QuestionBoxComponent implements OnInit {
     this.questionStatus = true;
     this.questionBusService.isAnswered.next({questionId: this.question?.id, answer: true});
 
-    const data = {questionId: this.question?.id, answerIndex: evt};
-    let param = '';
-
-    if (this.question?.id !== 0 && this.questionBusService.count % 4 === 0) {
-      console.log(this.question?.id, this.questionBusService.count, this.questionBusService.count % 4);
-      param = 'br=true';
-    }
-    this.questionService.sendAnswer(data, param).subscribe(res => {
-
-      this.questionBusService.sentAnswer.next('success');
-      this.questionBusService.count++;
-
-    }, error => {
-      console.log(this.currentStep);
-      this.questionBusService.sentAnswer.next('error');
-      this.changeStep.emit(this.currentStep);
-    });
+    this.postAnswer(Number(evt.value));
 
     if (Number(evt.value) === 0) {
       // console.log(true);
@@ -61,7 +45,6 @@ export class QuestionBoxComponent implements OnInit {
       }, 500);
       return;
     }
-    // console.log(false);
 
     this.selectedAnswer(false);
     setTimeout(() => {
@@ -78,6 +61,23 @@ export class QuestionBoxComponent implements OnInit {
       return;
     }
     this.questionBusService.answerList.push({questionId: this.question?.id, answer: value});
+  }
+
+  postAnswer(answer: number): void {
+    const data = {questionId: this.question?.id, answerIndex: answer};
+    let param = '';
+    if (this.question?.id !== 0 && this.questionBusService.answerList.length % 4 === 0) {
+      param = 'br=true';
+    }
+
+    this.questionService.sendAnswer(data, param).subscribe(res => {
+      this.questionBusService.responseState.next({state: 'success', questionId: this.question?.id});
+      console.log(res);
+
+    }, error => {
+      this.questionBusService.responseState.next({state: 'error', questionId: this.question?.id});
+      // this.changeStep.emit(this.currentStep);
+    });
   }
 
 }

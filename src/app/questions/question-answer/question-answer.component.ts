@@ -34,8 +34,6 @@ export class QuestionAnswerComponent implements OnInit, OnDestroy {
 
     this.subscription[1] = this.questionBusService.responseState.asObservable().subscribe(res => {
       if (res.state === 'success') {
-        console.log(this.questionBusService.responseList);
-        console.log(res);
         this.questionBusService.responseList.push(res);
       }
 
@@ -54,9 +52,6 @@ export class QuestionAnswerComponent implements OnInit, OnDestroy {
 
   changeStep(step: number): void {
     this.step = step;
-
-    // console.log('responseList', this.questionBusService.responseList);
-    // console.log('answerList', this.questionBusService.answerList);
   }
 
   ngOnDestroy(): void {

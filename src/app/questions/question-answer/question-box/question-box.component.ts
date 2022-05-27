@@ -58,13 +58,8 @@ export class QuestionBoxComponent implements OnInit {
   postAnswer(answer: number): void {
     const data = {questionId: this.question?.id, answerIndex: answer};
     let param = '';
-    // if (this.question?.id !== 0 && this.questionBusService.answerList.length % 3 === 0
-    //   && this.questionBusService.responseState.getValue().state !== 'error') {
-    //   param = 'br=true';
-    // }
 
     // return a 400  approximately every 1 in 4 posts
-
     if (this.questionBusService.responseList.length !== 0 && this.questionBusService.responseList.length % 3 === 0
       && this.questionBusService.responseState.getValue().state !== 'error') {
       param = 'br=true';

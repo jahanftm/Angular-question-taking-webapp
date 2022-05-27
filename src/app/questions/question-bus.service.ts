@@ -11,9 +11,9 @@ export class QuestionBusService {
 
   isAnswered: BehaviorSubject<{ questionId?: number, answer?: boolean }> = new BehaviorSubject<{ questionId?: number, answer?: boolean }>({});
 
-  answerList: any = [];
+  answerList: { questionId?: number, answer?: boolean }[] = [];
 
-  responseList: any = [];
+  responseList: { state?: string, questionId?: number }[] = [];
 
   constructor() {
   }

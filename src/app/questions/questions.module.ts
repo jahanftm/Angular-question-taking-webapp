@@ -6,6 +6,7 @@ import { QuestionAnswerComponent } from './question-answer/question-answer.compo
 import { QuestionBoxComponent } from './question-answer/question-box/question-box.component';
 import { QuestionCompleteComponent } from './question-complete/question-complete.component';
 import { UiButtonComponent } from '../ui/ui-button/ui-button.component';
+import { QuestionStartComponent } from './question-start/question-start.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { UiButtonComponent } from '../ui/ui-button/ui-button.component';
     QuestionBoxComponent,
     QuestionCompleteComponent,
     UiButtonComponent,
+    QuestionStartComponent,
   ],
   imports: [
     CommonModule,

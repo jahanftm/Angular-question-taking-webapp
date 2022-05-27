@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Question } from '../../../models/quiz.model';
 import { QuestionBusService } from '../../question-bus.service';
 import { QuestionService } from '../../../core/api/question.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-question-box',
@@ -36,17 +37,8 @@ export class QuestionBoxComponent implements OnInit {
 
     this.postAnswer(Number(evt.value));
 
-    if (Number(evt.value) === 0) {
-      // console.log(true);
-      this.selectedAnswer(true);
-      setTimeout(() => {
+    this.selectedAnswer(Number(evt.value) === 0);
 
-        this.changeStep.emit(this.currentStep + 1);
-      }, 500);
-      return;
-    }
-
-    this.selectedAnswer(false);
     setTimeout(() => {
       this.changeStep.emit(this.currentStep + 1);
     }, 500);
@@ -66,18 +58,26 @@ export class QuestionBoxComponent implements OnInit {
   postAnswer(answer: number): void {
     const data = {questionId: this.question?.id, answerIndex: answer};
     let param = '';
-    if (this.question?.id !== 0 && this.questionBusService.answerList.length % 4 === 0) {
+    // if (this.question?.id !== 0 && this.questionBusService.answerList.length % 3 === 0
+    //   && this.questionBusService.responseState.getValue().state !== 'error') {
+    //   param = 'br=true';
+    // }
+
+    // return a 400  approximately every 1 in 4 posts
+
+    if (this.questionBusService.responseList.length !== 0 && this.questionBusService.responseList.length % 3 === 0
+      && this.questionBusService.responseState.getValue().state !== 'error') {
       param = 'br=true';
     }
 
     this.questionService.sendAnswer(data, param).subscribe(res => {
       this.questionBusService.responseState.next({state: 'success', questionId: this.question?.id});
-      console.log(res);
 
     }, error => {
       this.questionBusService.responseState.next({state: 'error', questionId: this.question?.id});
       // this.changeStep.emit(this.currentStep);
     });
+
   }
 
 }

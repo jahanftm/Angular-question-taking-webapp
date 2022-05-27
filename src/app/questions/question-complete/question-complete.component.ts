@@ -33,7 +33,5 @@ export class QuestionCompleteComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.questionBusService.answerList = [];
-    this.questionBusService.responseList.length = [];
   }
 }
